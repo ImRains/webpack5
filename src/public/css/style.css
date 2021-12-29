@@ -1,7 +1,11 @@
 body{
-    color:red;
+    color:#666;
 }
 
 .title{
     transform: translateX(10px);
+}
+
+.button_item:nth-of-type(odd){
+    color:aquamarine;
 }

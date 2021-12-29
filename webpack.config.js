@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebapckPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
     mode: 'development',// 选择打包模式 development，production
@@ -15,9 +16,11 @@ module.exports = {
     },
     devServer: {
         //contentBase:'./dist', // webpack4写法
-        static:'./dist',
+        static:'./dist', // 编译后，html所在目录地址
         open: true, // 会自动的打开浏览器
         port: 5589, // webpack服务启动端口
+        hot:true, // 开启 HotModuleReplacement 热模块更新
+        // hot:'only' 启用热模块替换功能，在构建失败时不刷新页面作为回退
         // proxy:{ // 跨域代理
         //     'api':'http:127.0.0.1:3000'
         // }
@@ -54,14 +57,15 @@ module.exports = {
     },
     plugins:[
         new CleanWebpackPlugin(), // 每次打包之前，把dist目录先删除
-        new HtmlWebapckPlugin({
+        new HtmlWebapckPlugin({   // 会在打包结束后，自动生成一个html文件，并把大后生成的js引入到这个html文件中
             template:'src/view/index.html', // 模板文件
             cache: false // 关闭内存
-        }), // 会在打包结束后，自动生成一个html文件，并把大后生成的js引入到这个html文件中
+        }), 
+        new webpack.HotModuleReplacementPlugin()   // HRM，热更新插件，webpack内置插件
     ],
     output:{
-        //publicPath: '/',  //会在html模板中，引入的js的地址前生成前缀
-        filename: 'bundle.js', // 文件名，这里可以使用占位符
+        //publicPath: '/',     //会在html模板中，引入的js的地址前生成前缀
+        filename: 'bundle.js',   // 文件名，这里可以使用占位符
         path: path.join(__dirname, 'dist') // 打包出口地址
     }
 }
