@@ -19,7 +19,7 @@ module.exports = {
         static:'./dist', // 编译后，html所在目录地址
         open: true, // 会自动的打开浏览器
         port: 5589, // webpack服务启动端口
-        hot:true, // 开启 HotModuleReplacement 热模块更新
+        // hot:true, // 开启 HotModuleReplacement 热模块更新 引用HotModuleReplacementPlugin插件自动配置，无须手动添加
         // hot:'only' 启用热模块替换功能，在构建失败时不刷新页面作为回退
         // proxy:{ // 跨域代理
         //     'api':'http:127.0.0.1:3000'
@@ -51,6 +51,19 @@ module.exports = {
                         //publicPath: path.join(__dirname,'./dist/images/'), //引用打包输出路径，使用绝对路径，否则会在html相对路径下寻找
                         limit:2048 // 大于2048字节，即2KB，小于2KB打包成base64，大于2KB会被打包进dist
                     }
+                }
+            },
+            {
+                test:/\.js$/,
+                exclude:/node_modules/,
+                loader:'babel-loader', // 将ES6转为ES5，需要babel-loader @babel/core
+                options:{
+                    presets:[
+                        ['@babel/preset-env',{  // 使用babel插件 需要安装corejs
+                            "useBuiltIns": "entry", //存疑？？？ 改为usage，使用require就存在报错
+                            "corejs":"3"
+                        }]
+                    ]
                 }
             }
         ]
