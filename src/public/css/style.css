@@ -1,0 +1,7 @@
+body{
+    color:red;
+}
+
+.title{
+    transform: translateX(10px);
+}
