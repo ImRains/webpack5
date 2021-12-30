@@ -7,5 +7,5 @@ body{
 }
 
 .button_item:nth-of-type(odd){
-    color:aquampinkarine;
+    color:red;
 }

@@ -1,5 +1,5 @@
 function promiseCode(){
-    const arr = [
+    let arr = [
         new Promise(() => {}),
         new Promise(() => {})
     ]

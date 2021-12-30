@@ -59,11 +59,17 @@ module.exports = {
                 loader:'babel-loader', // 将ES6转为ES5，需要babel-loader @babel/core
                 options:{
                     presets:[
-                        ['@babel/preset-env',{  // 使用babel插件 需要安装corejs
-                            "useBuiltIns": "entry", //存疑？？？ 改为usage，使用require就存在报错
-                            "corejs":"3"
-                        }]
-                    ]
+                        [
+                            '@babel/preset-env',
+                            {   // 使用babel插件 需要安装corejs
+                                useBuiltIns: 'usage', //存疑？？？ 改为usage，使用require就存在报错 
+                                // 使用entry的时候，需要在入口文件引入 import "@babel/polyfill"
+                                corejs:3
+                            }
+                        ]
+                    ],
+                    sourceType: 'unambiguous' // 解决ES6和CommonJS模块导出的问题: https://babeljs.io/docs/en/options#sourcetype
+                                              // 让babel和webpack一样严格区分commonJS文件和ES6文件。
                 }
             }
         ]

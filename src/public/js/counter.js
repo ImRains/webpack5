@@ -8,6 +8,6 @@ function counter() {
     document.body.appendChild(div)
 }
 
-module.exports = {
+module.exports  = {
     counter
 }
