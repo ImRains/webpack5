@@ -83,8 +83,8 @@ module.exports = {
     },
     output: {
         //publicPath: '/',     //会在html模板中，引入的js的地址前生成前缀
-        filename: '[name].js',   // 文件名，这里可以使用占位符 ，入口文件取filename
-        chunkFilename: '[name].chunk.js', // 文件名 , chunk 文件取 chunkFilename
+        filename: '[name].[contenthash].js',   // 文件名，这里可以使用占位符 ，入口文件取filename
+        chunkFilename: '[name].[contenthash].chunk.js', // 文件名 , chunk 文件取 chunkFilename  contenehash 为了防止缓存
         path: path.join(__dirname, 'dist') // 打包出口地址
     }
 }
