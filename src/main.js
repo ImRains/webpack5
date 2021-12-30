@@ -28,13 +28,19 @@
 
 // ------------------- React -------
 
-import React , { Component } from 'react'
-import ReactDom from 'react-dom'
+// import React , { Component } from 'react'
+// import ReactDom from 'react-dom'
 
-class App extends Component {
-    render(){
-        return <div>Hello World</div>
-    }
-}
+// class App extends Component {
+//     render(){
+//         return <div>Hello World</div>
+//     }
+// }
 
-ReactDom.render(<App/>, document.getElementById('root'))
+// ReactDom.render(<App/>, document.getElementById('root'))
+
+// ------------------- React End --------
+
+// Tree Shaking 只支持 ES Module
+import {add,minus} from './public/js/math'
+add(1,2);

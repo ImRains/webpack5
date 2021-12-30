@@ -11,12 +11,12 @@ module.exports = {
     // https://www.html5rocks.com/en/tutorials/developertools/sourcemaps/
     // http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html
     // https://www.youtube.com/watch?v=NkVes0UMe9Y
-    entry:{
-        main:'./src/main.js'// 入口文件地址
+    entry: {
+        main: './src/main.js'// 入口文件地址
     },
     devServer: {
         //contentBase:'./dist', // webpack4写法
-        static:'./dist', // 编译后，html所在目录地址
+        static: './dist', // 编译后，html所在目录地址
         open: true, // 会自动的打开浏览器
         port: 5589, // webpack服务启动端口
         // hot:true, // 开启 HotModuleReplacement 热模块更新 引用HotModuleReplacementPlugin插件自动配置，无须手动添加
@@ -25,16 +25,16 @@ module.exports = {
         //     'api':'http:127.0.0.1:3000'
         // }
     },
-    module:{ //模块
+    module: { //模块
         rules: [  //规则
             {
                 test: /\.(css)$/, // 打包CSS文件
-                use:[ // 打包需要同时使用两个loader,css-loader会分析几个css文件之间的引用关系，进而打包。
+                use: [ // 打包需要同时使用两个loader,css-loader会分析几个css文件之间的引用关系，进而打包。
                     'style-loader',// style-loader是打包后将css挂在到header上,数组内loader执行顺序的从后向前
                     {
-                        loader:'css-loader', // css-loader 打包css
+                        loader: 'css-loader', // css-loader 打包css
                         options: {
-                            importLoaders:2, //通过import引入的文件，在此之前要被前两个loader打包一遍
+                            importLoaders: 2, //通过import引入的文件，在此之前要被前两个loader打包一遍
                             //modules:true   // CSS 模块化
                         }
                     },
@@ -42,29 +42,30 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i, 
-                use:{
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                use: {
                     loader: 'url-loader', //使用url-loader时，要安装好file-loader // 使用file-loader打包jpg图片  url-loader能实现file-loader的所有功能，将图片打包成base64
-                    options:{
+                    options: {
                         name: '[name]_[hash].[ext]', // 打包后的名称，name为图片原始名称，ext为图片原始格式后缀
-                        outputPath:'images/', //打包输出路径
+                        outputPath: 'images/', //打包输出路径
                         //publicPath: path.join(__dirname,'./dist/images/'), //引用打包输出路径，使用绝对路径，否则会在html相对路径下寻找
-                        limit:2048 // 大于2048字节，即2KB，小于2KB打包成base64，大于2KB会被打包进dist
+                        limit: 2048 // 大于2048字节，即2KB，小于2KB打包成base64，大于2KB会被打包进dist
+                        // 好处是减少http请求
                     }
                 }
             },
             {
-                test:/\.js$/,
-                exclude:/node_modules/,
-                loader:'babel-loader', // 将ES6转为ES5，需要babel-loader @babel/core
-                options:{
-                    presets:[
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader', // 将ES6转为ES5，需要babel-loader @babel/core
+                options: {
+                    presets: [
                         [
                             '@babel/preset-env',
                             {   // 使用babel插件 需要安装corejs
                                 useBuiltIns: 'usage', //存疑？？？ 改为usage，使用require就存在报错 
                                 // 使用entry的时候，需要在入口文件引入 import "@babel/polyfill"
-                                corejs:3
+                                corejs: 3
                             }
                         ],
                         [
@@ -72,20 +73,24 @@ module.exports = {
                         ]
                     ],
                     sourceType: 'unambiguous' // 解决ES6和CommonJS模块导出的问题: https://babeljs.io/docs/en/options#sourcetype
-                                              // 让babel和webpack一样严格区分commonJS文件和ES6文件。
+                    // 让babel和webpack一样严格区分commonJS文件和ES6文件。
                 }
             }
         ]
     },
-    plugins:[
+    plugins: [
         new CleanWebpackPlugin(), // 每次打包之前，把dist目录先删除
         new HtmlWebapckPlugin({   // 会在打包结束后，自动生成一个html文件，并把大后生成的js引入到这个html文件中
-            template:'src/view/index.html', // 模板文件
+            template: 'src/view/index.html', // 模板文件
             cache: false // 关闭内存
-        }), 
+        }),
         new webpack.HotModuleReplacementPlugin()   // HRM，热更新插件，webpack内置插件
     ],
-    output:{
+    optimization: { //开发模式下增加tree shaking，同时配置packagejson里面配置sideEffects，配置项为需要不需要treeshaking的模块，配置项数组
+        usedExports: true           // 因为 @babel/polyfill-fill没有导出，所以会被tree shaking给丢弃，这里要配置一下
+        // production 模式下不需要添加该配置项
+    },
+    output: {
         //publicPath: '/',     //会在html模板中，引入的js的地址前生成前缀
         filename: 'bundle.js',   // 文件名，这里可以使用占位符
         path: path.join(__dirname, 'dist') // 打包出口地址
