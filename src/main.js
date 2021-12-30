@@ -42,7 +42,12 @@
 // ------------------- React End --------------------------
 
 // --------------Tree Shaking 只支持 ES Module--------------
-import {add,minus} from './public/js/math'
-add(1,2);
+// import {add,minus} from './public/js/math'
+// add(1,2);
 // -------------- Tree Shaking End ------------------------
+
+// --------------- Code Splitting -------------------------
+// const { lodash_console } = require('./public/js/codesplitting')
+// lodash_console()
+// --------------- Code Splitting End----------------------
 

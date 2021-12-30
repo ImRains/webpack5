@@ -66,9 +66,31 @@ module.exports = {
             cache: false // 关闭内存
         })
     ],
+    optimization: {
+        splitChunks: { // code splitting 代码分割 ，lodash这种库就会被区分
+            chunks: 'all', // async 异步代码分割 all 所有代码分割
+            minSize: 20000, // 引入的包的大小大于2000字节，即20kb，则才开始代码分割
+            minChunks: 1, // 因为最少2次，才进行代码分割
+            maxAsyncRequests: 30, // 最多可以代码分割30个文件，超出后则不分割
+            maxInitialRequests: 30, // 入口文件代码分割不超过30个文件
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10, // 优先级 -10 > -20
+                    reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
+                    filename:'vendors.js' //匹配到node_modules的库后，单独打包到vendors.js中
+                },
+                default: {
+                    priority: -20,
+                    reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
+                    filename:'common.js' //匹配到node_modules的库后，单独打包到vendors.js中
+                },
+            },
+        }
+    },
     output: {
         //publicPath: '/',     //会在html模板中，引入的js的地址前生成前缀
-        filename: 'bundle.js',   // 文件名，这里可以使用占位符
+        filename: '[name].js',   // 文件名，这里可以使用占位符
         path: path.join(__dirname, 'dist') // 打包出口地址
     }
 }
