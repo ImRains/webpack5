@@ -7,6 +7,4 @@ async function lazyLoading(){
     return element
 }
 
-export  {
-    lazyLoading
-}
+export default lazyLoading

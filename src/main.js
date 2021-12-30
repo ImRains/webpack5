@@ -52,11 +52,18 @@
 // --------------- Code Splitting End----------------------
 
 // ----------------- Lazy Loading -------------------------
-const { lazyLoading } = require('./public/js/lazyloading')
-document.addEventListener('click', () => {
-    lazyLoading().then(ele => {
-        document.body.appendChild(ele)
-    })
-})
+// import lazyLoading from './public/js/lazyloading'
+// document.addEventListener('click', () => {
+//     lazyLoading().then(ele => {
+//         document.body.appendChild(ele)
+//     })
+// })
 // ----------------- Lazy Loading End----------------------
+
+
+// ------------------ CSS Module --------------------------
+import './public/css/style.css'
+import './public/css/cssmodule.css'
+console.log('helloworld')
+// ------------------ CSS Module  End----------------------
 

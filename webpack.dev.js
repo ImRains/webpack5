@@ -21,13 +21,27 @@ const devConfig = {
         //     'api':'http:127.0.0.1:3000'
         // }
     },
+    module: { //模块
+        rules: [  //规则
+            {
+                test: /\.(css)$/, // 打包CSS文件
+                use: [ // 打包需要同时使用两个loader,css-loader会分析几个css文件之间的引用关系，进而打包。
+                    'style-loader',// style-loader是打包后将css挂在到header上,数组内loader执行顺序的从后向前
+                    {
+                        loader: 'css-loader', // css-loader 打包css
+                        options: {
+                            importLoaders: 2, //通过import引入的文件，在此之前要被前两个loader打包一遍
+                            //modules:true   // CSS 模块化
+                        }
+                    },
+                    'postcss-loader' // post-loader 自动增加厂商前缀，用来支持css新特性,需要postcss.config.js配置文件
+                ]
+            }
+        ]
+    },
     plugins: [
         new webpack.HotModuleReplacementPlugin()   // HRM，热更新插件，webpack内置插件
-    ],
-    optimization: { //开发模式下增加tree shaking，同时配置packagejson里面配置sideEffects，配置项为需要不需要treeshaking的模块，配置项数组
-        usedExports: true           // 因为 @babel/polyfill-fill没有导出，所以会被tree shaking给丢弃，这里要配置一下
-        // production 模式下不需要添加该配置项
-    }
+    ]
 }
 
 module.exports = merge(commonConfig, devConfig)

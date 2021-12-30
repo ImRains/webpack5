@@ -9,20 +9,6 @@ module.exports = {
     module: { //模块
         rules: [  //规则
             {
-                test: /\.(css)$/, // 打包CSS文件
-                use: [ // 打包需要同时使用两个loader,css-loader会分析几个css文件之间的引用关系，进而打包。
-                    'style-loader',// style-loader是打包后将css挂在到header上,数组内loader执行顺序的从后向前
-                    {
-                        loader: 'css-loader', // css-loader 打包css
-                        options: {
-                            importLoaders: 2, //通过import引入的文件，在此之前要被前两个loader打包一遍
-                            //modules:true   // CSS 模块化
-                        }
-                    },
-                    'postcss-loader' // post-loader 自动增加厂商前缀，用来支持css新特性,需要postcss.config.js配置文件
-                ]
-            },
-            {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 use: {
                     loader: 'url-loader', //使用url-loader时，要安装好file-loader // 使用file-loader打包jpg图片  url-loader能实现file-loader的所有功能，将图片打包成base64
@@ -68,35 +54,37 @@ module.exports = {
         })
     ],
     optimization: {
+        usedExports: true,           // 因为 @babel/polyfill-fill没有导出，所以会被tree shaking给丢弃，这里要配置一下
         splitChunks: { // code splitting 代码分割 ，lodash这种库就会被区分
             chunks: 'all', // async 异步代码分割 all 所有代码分割
-            // minSize: 20000, // 引入的包的大小大于2000字节，即20kb，则才开始代码分割
-            // minChunks: 1, // 引用最少1次，才进行代码分割
-            // maxAsyncRequests: 30, // 最多可以代码分割30个文件，超出后则不分割
-            // maxInitialRequests: 30, // 入口文件代码分割不超过30个文件
-            // enforceSizeThreshold: 50000,
-            // name:(module, chunks, cacheGroupKey) => {
-            //     const allChunksNames = chunks.map((chunk) => chunk.name).join('~');
-            //     const prefix = cacheGroupKey === 'defaultVendors' ? 'vendors' : cacheGroupKey;
-            //     return `${prefix}~${allChunksNames}`;
-            // },
-            // cacheGroups: {
-            //     vendors: {
-            //         test: /[\\/]node_modules[\\/]/,
-            //         priority: -10, // 优先级 -10 > -20
-            //         reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
-            //     },
-            //     default: {
-            //         priority: -20,
-            //         reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
-            //         filename: 'common.js'
-            //     },
-            // },
+            minSize: 20000, // 引入的包的大小大于2000字节，即20kb，则才开始代码分割
+            minChunks: 1, // 引用最少1次，才进行代码分割
+            maxAsyncRequests: 30, // 最多可以代码分割30个文件，超出后则不分割
+            maxInitialRequests: 30, // 入口文件代码分割不超过30个文件
+            enforceSizeThreshold: 50000,
+            name:(module, chunks, cacheGroupKey) => {
+                const allChunksNames = chunks.map((chunk) => chunk.name).join('~');
+                const prefix = cacheGroupKey === 'defaultVendors' ? 'vendors' : cacheGroupKey;
+                return `${prefix}~${allChunksNames}`;
+            },
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10, // 优先级 -10 > -20
+                    reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
+                },
+                default: {
+                    priority: -20,
+                    reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
+                    filename: 'common.js'
+                },
+            },
         }
     },
     output: {
         //publicPath: '/',     //会在html模板中，引入的js的地址前生成前缀
-        filename: '[name].js',   // 文件名，这里可以使用占位符
+        filename: '[name].js',   // 文件名，这里可以使用占位符 ，入口文件取filename
+        chunkFilename: '[name].chunk.js', // 文件名 , chunk 文件取 chunkFilename
         path: path.join(__dirname, 'dist') // 打包出口地址
     }
 }
