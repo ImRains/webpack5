@@ -55,7 +55,7 @@ module.exports = {
                     ],
                     sourceType: 'unambiguous', // 解决ES6和CommonJS模块导出的问题: https://babeljs.io/docs/en/options#sourcetype
                     // 让babel和webpack一样严格区分commonJS文件和ES6文件。
-                    plugins: ["@babel/plugin-syntax-dynamic-import"]
+                    //plugins: ["@babel/plugin-syntax-dynamic-import"] 目前没有安装
                 }
             }
         ]
@@ -70,28 +70,28 @@ module.exports = {
     optimization: {
         splitChunks: { // code splitting 代码分割 ，lodash这种库就会被区分
             chunks: 'all', // async 异步代码分割 all 所有代码分割
-            minSize: 20000, // 引入的包的大小大于2000字节，即20kb，则才开始代码分割
-            minChunks: 1, // 因为最少2次，才进行代码分割
-            maxAsyncRequests: 30, // 最多可以代码分割30个文件，超出后则不分割
-            maxInitialRequests: 30, // 入口文件代码分割不超过30个文件
-            enforceSizeThreshold: 50000,
-            name:(module, chunks, cacheGroupKey) => {
-                const allChunksNames = chunks.map((chunk) => chunk.name).join('~');
-                const prefix = cacheGroupKey === 'defaultVendors' ? 'vendors' : cacheGroupKey;
-                return `${prefix}~${allChunksNames}`;
-            },
-            cacheGroups: {
-                vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10, // 优先级 -10 > -20
-                    reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
-                },
-                default: {
-                    priority: -20,
-                    reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
-                    filename: 'common.js'
-                },
-            },
+            // minSize: 20000, // 引入的包的大小大于2000字节，即20kb，则才开始代码分割
+            // minChunks: 1, // 引用最少1次，才进行代码分割
+            // maxAsyncRequests: 30, // 最多可以代码分割30个文件，超出后则不分割
+            // maxInitialRequests: 30, // 入口文件代码分割不超过30个文件
+            // enforceSizeThreshold: 50000,
+            // name:(module, chunks, cacheGroupKey) => {
+            //     const allChunksNames = chunks.map((chunk) => chunk.name).join('~');
+            //     const prefix = cacheGroupKey === 'defaultVendors' ? 'vendors' : cacheGroupKey;
+            //     return `${prefix}~${allChunksNames}`;
+            // },
+            // cacheGroups: {
+            //     vendors: {
+            //         test: /[\\/]node_modules[\\/]/,
+            //         priority: -10, // 优先级 -10 > -20
+            //         reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
+            //     },
+            //     default: {
+            //         priority: -20,
+            //         reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
+            //         filename: 'common.js'
+            //     },
+            // },
         }
     },
     output: {
