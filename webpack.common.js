@@ -53,8 +53,9 @@ module.exports = {
                             '@babel/preset-react' // 编译react代码,由下网上执行
                         ]
                     ],
-                    sourceType: 'unambiguous' // 解决ES6和CommonJS模块导出的问题: https://babeljs.io/docs/en/options#sourcetype
+                    sourceType: 'unambiguous', // 解决ES6和CommonJS模块导出的问题: https://babeljs.io/docs/en/options#sourcetype
                     // 让babel和webpack一样严格区分commonJS文件和ES6文件。
+                    plugins: ["@babel/plugin-syntax-dynamic-import"]
                 }
             }
         ]
@@ -73,17 +74,22 @@ module.exports = {
             minChunks: 1, // 因为最少2次，才进行代码分割
             maxAsyncRequests: 30, // 最多可以代码分割30个文件，超出后则不分割
             maxInitialRequests: 30, // 入口文件代码分割不超过30个文件
+            enforceSizeThreshold: 50000,
+            name:(module, chunks, cacheGroupKey) => {
+                const allChunksNames = chunks.map((chunk) => chunk.name).join('~');
+                const prefix = cacheGroupKey === 'defaultVendors' ? 'vendors' : cacheGroupKey;
+                return `${prefix}~${allChunksNames}`;
+            },
             cacheGroups: {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     priority: -10, // 优先级 -10 > -20
                     reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
-                    filename:'vendors.js' //匹配到node_modules的库后，单独打包到vendors.js中
                 },
                 default: {
                     priority: -20,
                     reuseExistingChunk: true, // 如果一个模块已经打包过，则不重复打包，直接复用
-                    filename:'common.js' //匹配到node_modules的库后，单独打包到vendors.js中
+                    filename: 'common.js'
                 },
             },
         }

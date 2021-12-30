@@ -51,3 +51,12 @@
 // lodash_console()
 // --------------- Code Splitting End----------------------
 
+// ----------------- Lazy Loading -------------------------
+const { lazyLoading } = require('./public/js/lazyloading')
+document.addEventListener('click', () => {
+    lazyLoading().then(ele => {
+        document.body.appendChild(ele)
+    })
+})
+// ----------------- Lazy Loading End----------------------
+
