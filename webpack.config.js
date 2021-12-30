@@ -66,6 +66,9 @@ module.exports = {
                                 // 使用entry的时候，需要在入口文件引入 import "@babel/polyfill"
                                 corejs:3
                             }
+                        ],
+                        [
+                            '@babel/preset-react' // 编译react代码,由下网上执行
                         ]
                     ],
                     sourceType: 'unambiguous' // 解决ES6和CommonJS模块导出的问题: https://babeljs.io/docs/en/options#sourcetype

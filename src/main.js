@@ -13,20 +13,28 @@
 // import { promiseCode } from './public/js/promise'
 // promiseCode()
 
-require('./public/css/style.css')
-const { component } = require('./public/js/comment')
-const { addButton } = require('./public/js/button')
+// require('./public/css/style.css')
+// const { component } = require('./public/js/comment')
+// const { addButton } = require('./public/js/button')
 // const { counter } = require('./public/js/counter')
-const { number } = require('./public/js/number')
+// const { number } = require('./public/js/number')
+// const { promiseCode } = require('./public/js/promise')
 
-
-
-document.body.appendChild(component());
-addButton();
-
-
+// document.body.appendChild(component());
+// addButton();
 // counter()
-number()
+// number()
+// promiseCode()
 
-const { promiseCode } = require('./public/js/promise')
-promiseCode()
+// ------------------- React -------
+
+import React , { Component } from 'react'
+import ReactDom from 'react-dom'
+
+class App extends Component {
+    render(){
+        return <div>Hello World</div>
+    }
+}
+
+ReactDom.render(<App/>, document.getElementById('root'))
