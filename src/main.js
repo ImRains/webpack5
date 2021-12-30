@@ -26,7 +26,7 @@
 // number()
 // promiseCode()
 
-// ------------------- React -------
+// ------------------- React -----------------------------
 
 // import React , { Component } from 'react'
 // import ReactDom from 'react-dom'
@@ -39,8 +39,10 @@
 
 // ReactDom.render(<App/>, document.getElementById('root'))
 
-// ------------------- React End --------
+// ------------------- React End --------------------------
 
-// Tree Shaking 只支持 ES Module
+// --------------Tree Shaking 只支持 ES Module--------------
 import {add,minus} from './public/js/math'
 add(1,2);
+// -------------- Tree Shaking End ------------------------
+
