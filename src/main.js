@@ -62,8 +62,13 @@
 
 
 // ------------------ CSS Module --------------------------
-import './public/css/style.css'
-import './public/css/cssmodule.css'
-console.log('helloworld')
+// import './public/css/style.css'
+// import './public/css/cssmodule.css'
+// console.log('helloworld')
 // ------------------ CSS Module  End----------------------
+
+// ------------------ Shimming ----------------------------
+// const { ui } = require('./public/js/jquery')
+// ui()
+// ------------------- Shimming End -----------------------
 

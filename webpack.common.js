@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebapckPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
     entry: {
@@ -51,6 +52,9 @@ module.exports = {
         new HtmlWebapckPlugin({   // 会在打包结束后，自动生成一个html文件，并把大后生成的js引入到这个html文件中
             template: 'src/view/index.html', // 模板文件
             cache: false // 关闭内存
+        }),
+        new webpack.ProvidePlugin({  // Shimming
+            $: 'jquery' // 当文件匹配到 $ 符号时，会自动引入jquery模块
         })
     ],
     optimization: {
