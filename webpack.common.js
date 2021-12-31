@@ -8,7 +8,7 @@ const prodConfig = require('./webpack.prod')
 
 const commonConfig = {
     entry: {
-        main: './src/main.js'// 入口文件地址
+        main: './src/main.ts'// 入口文件地址
     },
     module: { //模块
         rules: [  //规则
@@ -47,6 +47,11 @@ const commonConfig = {
                     // 让babel和webpack一样严格区分commonJS文件和ES6文件。
                     //plugins: ["@babel/plugin-syntax-dynamic-import"] 目前没有安装
                 }
+            },
+            {
+                test: /\.(tsx|ts)?$/,
+                exclude: /node_modules/,
+                use: 'ts-loader', // 需要同时安装ts—loader 和 typescript
             }
         ]
     },
