@@ -9,3 +9,7 @@ webpack 性能优化
 4. 尽可能的写清晰引用路径，减少resolve的配置
 5. 使用DllPlugin提高打包速度
 6. 控制包文件大小
+7. 多进程打包 thread-loader,parallel-webpack,happypack
+8. 合理使用sourceMap
+9. 开发环境内存编译
+10. 开发环境无用插件剔除

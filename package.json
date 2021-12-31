@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "start": "http-server dist",
+    "devbuild": "cross-env NODE_ENV=dev webpack --config webpack.common.js",
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.common.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.common.js"
   },
