@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const WorkBoxPlugin = require('workbox-webpack-plugin')
 
 const prodConfig = {
     mode: 'production',// 选择打包模式 development，production
@@ -39,6 +40,10 @@ const prodConfig = {
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[name].chunk.css'
+        }),
+        new WorkBoxPlugin.GenerateSW({ // PWA插件
+            clientsClaim: true,
+            skipWaiting: true
         })
     ]
 }
