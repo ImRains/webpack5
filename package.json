@@ -8,8 +8,8 @@
   "private": true,
   "scripts": {
     "bundle": "webpack --config webpack.dev.js",
-    "dev": "webpack-dev-server --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "dev": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.common.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.common.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^3.3.1",
     "file-loader": "^6.2.0",

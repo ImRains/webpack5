@@ -1,6 +1,4 @@
 const webpack = require('webpack')
-const commonConfig = require('./webpack.common')
-const { merge } = require('webpack-merge')
 
 const devConfig = {
     mode: 'development',// 选择打包模式 development，production
@@ -44,4 +42,4 @@ const devConfig = {
     ]
 }
 
-module.exports = merge(commonConfig, devConfig)
+module.exports = devConfig

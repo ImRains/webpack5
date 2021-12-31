@@ -68,7 +68,7 @@
 // ------------------ CSS Module  End----------------------
 
 // ------------------ Shimming ----------------------------
-// const { ui } = require('./public/js/jquery')
-// ui()
+const { ui } = require('./public/js/jquery')
+ui()
 // ------------------- Shimming End -----------------------
 

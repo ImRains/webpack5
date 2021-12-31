@@ -2,8 +2,11 @@ const path = require('path')
 const HtmlWebapckPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
+const { merge } = require('webpack-merge')
+const devConfig = require('./webpack.dev')
+const prodConfig = require('./webpack.prod')
 
-module.exports = {
+const commonConfig = {
     entry: {
         main: './src/main.js'// 入口文件地址
     },
@@ -90,5 +93,13 @@ module.exports = {
         filename: '[name].[contenthash].js',   // 文件名，这里可以使用占位符 ，入口文件取filename
         chunkFilename: '[name].[contenthash].chunk.js', // 文件名 , chunk 文件取 chunkFilename  contenehash 为了防止缓存
         path: path.join(__dirname, 'dist') // 打包出口地址
+    }
+}
+
+module.exports = ()=>{
+    if(process.env.NODE_ENV === 'dev'){
+        return merge(commonConfig, devConfig)
+    }else{
+        return merge(commonConfig, prodConfig)
     }
 }
