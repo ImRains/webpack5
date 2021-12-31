@@ -15,8 +15,14 @@ const devConfig = {
         port: 5589, // webpack服务启动端口
         // hot:true, // 开启 HotModuleReplacement 热模块更新 引用HotModuleReplacementPlugin插件自动配置，无须手动添加
         // hot:'only' 启用热模块替换功能，在构建失败时不刷新页面作为回退
-        // proxy:{ // 跨域代理
-        //     'api':'http:127.0.0.1:3000'
+        // proxy:{ // 跨域代理 
+        //     '/api':{  //当访问/api路径的接口的时候
+        //          tartet:''http:127.0.0.1:3000', //将会转发到指定的服务器地址 
+        //          //secure:false, // 如果是https，需要添加
+        //          pathRewrite : {
+        //             'header.json':'demo.json'  //从headerjaon转到demojson
+        //          }
+        //      }
         // }
     },
     module: { //模块
