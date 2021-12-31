@@ -10,6 +10,11 @@ const commonConfig = {
     entry: {
         main: './src/main.ts'// 入口文件地址
     },
+    // resolve:{
+    //     alias:{
+    //         'src' : path.resolve(__dirname,'./src')
+    //     }
+    // },
     module: { //模块
         rules: [  //规则
             {
