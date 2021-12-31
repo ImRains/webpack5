@@ -93,6 +93,9 @@ const commonConfig = {
         filename: '[name].[contenthash].js',   // 文件名，这里可以使用占位符 ，入口文件取filename
         chunkFilename: '[name].[contenthash].chunk.js', // 文件名 , chunk 文件取 chunkFilename  contenehash 为了防止缓存
         path: path.join(__dirname, 'dist') // 打包出口地址
+        //library: 'library', // 打包生成的方法挂载到library，可以供script标签直接引用
+        //libraryTarget:'umd',// 打包生成的library支持各种模块引用 // this window global umd
+        //搭配externals:'lodash'，可以把引入的lodash模块排除打包
     }
 }
 
